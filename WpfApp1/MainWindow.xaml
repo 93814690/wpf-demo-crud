@@ -1,0 +1,58 @@
+﻿<mah:MetroWindow x:Class="WpfApp1.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                 xmlns:local="clr-namespace:WpfApp1"
+                 mc:Ignorable="d"
+                 Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="搜索姓名" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+            <TextBox Width="200" Text="{Binding peopleQuery.name}" Height="25" Margin="10 0 0 0 "></TextBox>
+            <Button Content="搜索" Command="{Binding QueryCommand}" Width="70" Height="25" Margin="10 0 0 0 "></Button>
+            <Button Content="添加" Command="{Binding AddCommand}" Width="70" Height="25" Margin="10 0 0 0 "></Button>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1" x:Name="dataGrid" ItemsSource="{Binding gridModelList}" Margin="10" AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Width="50" Binding="{Binding id}" />
+                <DataGridTextColumn Header="用户名" Width="80" Binding="{Binding username}" />
+                <DataGridTextColumn Header="姓名" Width="80" Binding="{Binding name}" />
+                <DataGridTextColumn Header="年龄" Width="50" Binding="{Binding age}" />
+                <DataGridTextColumn Header="性别" Width="50" Binding="{Binding sex}" />
+                <DataGridTextColumn Header="创建时间" Width="150" Binding="{Binding createTime}" />
+                <DataGridTextColumn Header="更新时间" Width="150" Binding="{Binding updateTime}" />
+                <DataGridTemplateColumn Header="操作" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"
+                                            VerticalAlignment="Center">
+                                    <Button Width="40" Height="20" Content="编辑" 
+                                            CommandParameter="{Binding id}"
+                                            Command="{Binding DataContext.EditCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                            />
+                                    <Button Width="40" Height="20" Margin="10,0,0,0" Content="删除" 
+                                            CommandParameter="{Binding id}"
+                                            Command="{Binding DataContext.DelCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                    />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+    </Grid>
+</mah:MetroWindow>
